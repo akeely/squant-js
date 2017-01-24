@@ -5,6 +5,8 @@ import {
     connect
 } from 'react-redux';
 
+import {List, ListItem} from 'material-ui/List';
+
 import tripsActions from '../actions/tripsActions'
 
 const FAKE_GROUP = 'fakeGroupId';
@@ -40,12 +42,12 @@ class Trips extends Component {
         } = this.props;
 
         const rows = trips.map((trip) =>
-            (<li className="list-group-item" key={trip.id}>{trip.date} Total won: {trip.totalWon}</li>));
+            (<ListItem key={trip.id}>{trip.date} Total won: {trip.totalWon}</ListItem>));
 
         return (
-            <ul className="list-group">
+            <List>
                 {rows}
-            </ul>
+            </List>
         );
     }
 }
