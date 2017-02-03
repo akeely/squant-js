@@ -8,9 +8,9 @@ const INITIAL_STATE = {
 
 const findTrips = (currentState, action) => {
     const {
-    loading,
-    payload = []
-  } = action;
+        loading,
+        payload = []
+    } = action;
 
     return {
         loading,
@@ -19,10 +19,10 @@ const findTrips = (currentState, action) => {
 };
 
 const findTrip = (currentState, action) => {
-const {
-    loading,
-    payload = {}
-  } = action;
+    const {
+        loading,
+        payload = {}
+    } = action;
 
     return {
         loading,

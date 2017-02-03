@@ -4,8 +4,8 @@ const ROOT_URL = 'https://z9k4mo5zzh.execute-api.us-east-1.amazonaws.com/test';
 
 export default {
 
-    getTrips(groupId) {
-        return axios.get(`${ROOT_URL}/${groupId}/trip`)
+    getBets(groupId) {
+        return axios.get(`${ROOT_URL}/${groupId}/bet`)
             .then((response) => response.data || [])
             .catch((error) => {
                 console.log(error);
@@ -13,8 +13,8 @@ export default {
             })
     },
 
-    getTrip(groupId, tripId) {
-        return axios.get(`${ROOT_URL}/${groupId}/trip/${tripId}`)
+    getBet(groupId, betId) {
+        return axios.get(`${ROOT_URL}/${groupId}/bet/${betId}`)
             .then((response) => response.data || {})
             .catch((error) => {
                 console.log(error);

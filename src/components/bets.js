@@ -7,42 +7,42 @@ import {
 
 import {List, ListItem} from 'material-ui/List';
 
-import tripsActions from '../actions/tripsActions'
+import betsActions from '../actions/betsActions'
 
 const FAKE_GROUP = 'fakeGroupId';
 
 const mapStateToProps = (state) => {
   return {
-    ...state.tripsData
+    ...state.betsData
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      findTrips(groupId) {
-          dispatch(tripsActions.findTrips(groupId));
+      findBets(groupId) {
+          dispatch(betsActions.findBets(groupId));
       }
   };
 };
 
-class Trips extends Component {
+class Bets extends Component {
 
     componentDidMount() {
         const {
-            findTrips
+            findBets
         } = this.props;
 
-        findTrips(FAKE_GROUP);
+        findBets(FAKE_GROUP);
     }
 
     render() {
 
         const {
-            trips
+            bets
         } = this.props;
 
-        const rows = trips.map((trip) =>
-            (<ListItem key={trip.id}>{trip.date} Total won: {trip.totalWon}</ListItem>));
+        const rows = bets.map((bet) =>
+            (<ListItem key={bet.id}>{bet.name}: Status: {bet.status}</ListItem>));
 
         return (
             <List>
@@ -52,4 +52,4 @@ class Trips extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Trips);
+export default connect(mapStateToProps, mapDispatchToProps)(Bets);
