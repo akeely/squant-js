@@ -5,7 +5,7 @@ import {
     connect
 } from 'react-redux';
 
-import {List, ListItem} from 'material-ui/List';
+import Bet from './bet';
 
 import betsActions from '../actions/betsActions'
 
@@ -41,13 +41,15 @@ class Bets extends Component {
             bets
         } = this.props;
 
-        const rows = bets.map((bet) =>
-            (<ListItem key={bet.id}>{bet.name}: Status: {bet.status}</ListItem>));
+        const betCards = bets.map((bet) => (
+                <Bet bet={bet} key={bet.id} />
+            )
+        );
 
         return (
-            <List>
-                {rows}
-            </List>
+            <div>
+                {betCards}
+            </div>
         );
     }
 }

@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 
 import thunkMiddleware from 'redux-thunk';
-import createLogger from 'redux-logger';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -32,16 +31,13 @@ import tripsReducer from './reducers/tripsReducer';
 import App from './App';
 import './index.css';
 
-const loggerMiddleware = createLogger()
-
 let store = createStore(
     combineReducers({
         betsData: betsReducer,
         tripsData: tripsReducer
     }),
     applyMiddleware(
-        thunkMiddleware,
-        loggerMiddleware
+        thunkMiddleware
     ));
 
 // Needed for onTouchTap
