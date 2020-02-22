@@ -1,20 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Bets from "./Bets";
+import Container from "react-bootstrap/Container";
+
+import Bets from "./bets/Bets";
+import SquantNav from "./nav/SquantNav";
 
 function App() {
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Bets/>
-      </header>
-    </div>
+      <div>
+        <Container>
+          <SquantNav/>
+        </Container>
+        <Container>
+          <Bets/>
+        </Container>
+      </div>
   );
 }
 

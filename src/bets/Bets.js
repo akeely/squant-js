@@ -1,4 +1,6 @@
 import React from 'react';
+import Container from "react-bootstrap/Container";
+import Bet from './Bet';
 
 class Bets extends React.Component {
 
@@ -15,12 +17,12 @@ class Bets extends React.Component {
 
     render() {
 
-        let items = this.state.bets.map(b => <li>{b.creator}</li>);
+        let items = this.state.bets.map(b => <Bet bet={b} />);
 
         return (
-            <ul>
+            <Container>
                 {items}
-            </ul>
+            </Container>
         );
     }
 }
