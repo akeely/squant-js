@@ -5,8 +5,6 @@ class SquantNav extends React.Component {
 
     render() {
 
-        let bet = this.props.bet;
-
         return (
             <Navbar bg="dark" variant="dark">
                 <Navbar.Brand>SQU❄NT</Navbar.Brand>
