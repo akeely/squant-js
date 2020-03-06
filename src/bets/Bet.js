@@ -7,9 +7,11 @@ class Bet extends React.Component {
 
         let bet = this.props.bet;
 
+        console.log(bet);
+
         return (
             <Row>
-                <p>{bet.creator} bet {bet.against} {bet.amount} {bet.currency} for {bet.description}.</p>
+                <p>{bet.creator.name} bet {bet.against.name} {bet.amount} {bet.currency} for {bet.description}.</p>
             </Row>
         );
     }
