@@ -8,7 +8,18 @@ class Add extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { users: []};
+        this.state = { users: [],
+          against: null,
+          currency: 'beers',
+          amount: 1.0,
+          description: null
+        };
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleAgainstChange = this.handleAgainstChange.bind(this);
+        this.handleCurrencyChange = this.handleCurrencyChange.bind(this);
+        this.handleAmountChange = this.handleAmountChange.bind(this);
+        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     }
 
     componentDidMount() {
@@ -17,34 +28,82 @@ class Add extends React.Component {
           .then(json => this.setState({ users: json.data }));
     }
 
+    handleSubmit(event) {
+
+        const body = {
+            against:     this.state.against,
+            currency:    this.state.currency,
+            amount:      this.state.amount,
+            description: this.state.description
+        };
+
+        const csrfToken = document.querySelector('meta[name=_csrf]').content;
+        const csrfHeader = document.querySelector('meta[name=_csrf_header]').content;
+
+        event.preventDefault();
+        fetch('/api/1/bets', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-type': 'application/json',
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify(body)
+        }).then(data => {
+            console.log('Bet submitted');
+            console.log(data);
+        });
+    }
+
+    handleAgainstChange(event) {
+        if (event.length > 0) {
+            const againstId = event[0].id;
+            this.setState({against: againstId});
+        } else {
+            this.setState({against: null});
+        }
+    }
+
+    handleCurrencyChange(event) {
+        this.setState({currency: event.target.value});
+    }
+
+    handleAmountChange(event) {
+        this.setState({amount: event.target.value});
+    }
+
+    handleDescriptionChange(event) {
+        this.setState({description: event.target.value});
+    }
+
 
     render() {
-
 
         return (
           <div>
             <h3>Create a Bet</h3>
-            <Form>
+            <Form onSubmit={this.handleSubmit}>
                 <Typeahead
-                    id="against-typeahead"
+                    id="addBetForm.against"
                     options={this.state.users}
-                    labelKey="name"
+                    labelKey={option => `${option.name} (${option.email})`}
                     placeholder="Bet against..."
+                    onChange={this.handleAgainstChange}
                 />
                 <Form.Group controlId="addBetForm.currency">
                     <Form.Label>What to bet</Form.Label>
-                    <Form.Control as="select">
+                    <Form.Control as="select" onChange={this.handleCurrencyChange}>
                         <option>beers</option>
                         <option>money</option>
                     </Form.Control>
                 </Form.Group>
                 <Form.Group controlId="addBetForm.against">
                     <Form.Label>How much to bet</Form.Label>
-                    <Form.Control type="number" placeholder="Amount" />
+                    <Form.Control type="number" placeholder="Amount" onChange={this.handleAmountChange} />
                 </Form.Group>
                 <Form.Group controlId="addBetForm.description">
                     <Form.Label>Bet description</Form.Label>
-                    <Form.Control as="textarea" rows="3" />
+                    <Form.Control as="textarea" rows="3" onChange={this.handleDescriptionChange} />
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Create Bet
