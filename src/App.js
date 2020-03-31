@@ -1,32 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Container from "react-bootstrap/Container";
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import FontIcon from 'material-ui/FontIcon';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
 
-import './App.css';
+import Bets from "./bets/Bets";
+import Add from "./bets/Add";
+import SquantNav from "./nav/SquantNav";
 
-import Bets from './components/bets';
-import Menu from './components/menu';
-import Trips from './components/trips';
+function App() {
 
-import './css/styles.css';
-
-
-class App extends Component {
-
-  render() {
-
-    return (
+  return (
+    <Router>
       <div>
-        <Menu />
-        <Bets />
-        <Trips />
-        <FloatingActionButton className="fab" secondary={true}>
-            <FontIcon className="material-icons">add</FontIcon>
-        </FloatingActionButton>
+        <Container>
+          <SquantNav/>
+        </Container>
+        <Container>
+          <Switch>
+            <Route exact path="/">
+              <Bets/>
+            </Route>
+            <Route path="/bets">
+              <Bets/>
+            </Route>
+            <Route path="/add">
+              <Add />
+            </Route>
+          </Switch>
+        </Container>
       </div>
-    );
-  }
+    </Router>
+  );
 }
 
 export default App;
