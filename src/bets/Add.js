@@ -2,6 +2,7 @@ import React from 'react';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import {Typeahead} from 'react-bootstrap-typeahead';
+import Redirect from 'react-router-dom/Redirect';
 
 class Add extends React.Component {
 
@@ -10,9 +11,11 @@ class Add extends React.Component {
         super(props);
         this.state = { users: [],
           against: null,
+          againstName: null,
           currency: 'beers',
           amount: 1.0,
-          description: null
+          description: null,
+          successAgainst: null
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -52,15 +55,23 @@ class Add extends React.Component {
         }).then(data => {
             console.log('Bet submitted');
             console.log(data);
+            this.setState({successAgainst: this.state.againstName})
         });
     }
 
     handleAgainstChange(event) {
         if (event.length > 0) {
             const againstId = event[0].id;
-            this.setState({against: againstId});
+            const againstName = event[0].name;
+            this.setState({
+                against: againstId,
+                againstName: againstName
+            });
         } else {
-            this.setState({against: null});
+            this.setState({
+                against: null,
+                againstName: null
+            });
         }
     }
 
@@ -78,6 +89,18 @@ class Add extends React.Component {
 
 
     render() {
+
+        if (this.state.successAgainst != null) {
+
+            return (
+              <Redirect
+                to={{
+                    pathname: "/bets",
+                    state: {newBet: this.state.successAgainst}
+                }}
+              />
+            )
+        }
 
         return (
           <div>
