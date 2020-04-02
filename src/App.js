@@ -24,9 +24,7 @@ function App() {
             <Route exact path="/">
               <Bets/>
             </Route>
-            <Route path="/bets">
-              <Bets/>
-            </Route>
+            <Route path="/bets" render={(props) => <Bets newBet={props.location.state.newBet} />} />
             <Route path="/add">
               <Add />
             </Route>
