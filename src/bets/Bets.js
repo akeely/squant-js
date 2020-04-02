@@ -11,22 +11,20 @@ class Bets extends React.Component {
             bets: [],
             newBet: null
         };
+        this.loadBets = this.loadBets.bind(this);
     }
 
     componentDidMount() {
         console.log(this.props);
         this.setState({newBet: this.props.newBet});
-
-        fetch('/api/1/bets')
-            .then(response => response.json())
-            .then(json => this.setState({ bets: json.data }));
+        this.loadBets();
     }
 
     render() {
 
 
 
-        let items = this.state.bets.map(b => <Bet bet={b} />);
+        let items = this.state.bets.map(b => <Bet bet={b} reloadFunction={this.loadBets} />);
 
         return (
           <div>
@@ -40,6 +38,12 @@ class Bets extends React.Component {
             </Container>
           </div>
         );
+    }
+
+    loadBets() {
+        fetch('/api/1/bets')
+          .then(response => response.json())
+          .then(json => this.setState({ bets: json.data }));
     }
 }
 
