@@ -13,6 +13,8 @@ import SquantNav from "./nav/SquantNav";
 
 function App() {
 
+
+
   return (
     <Router>
       <div>
@@ -24,7 +26,13 @@ function App() {
             <Route exact path="/">
               <Bets/>
             </Route>
-            <Route path="/bets" render={(props) => <Bets newBet={props.location.state.newBet} />} />
+            <Route path="/bets" render={(props) => {
+              let newBet = null;
+              if (!!props.location.state) {
+                newBet = props.location.state.newBet;
+              }
+              return (<Bets newBet={newBet} />);
+            }} />
             <Route path="/add">
               <Add />
             </Route>
