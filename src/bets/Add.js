@@ -117,6 +117,7 @@ class Add extends React.Component {
                     <Form.Label>What to bet</Form.Label>
                     <Form.Control as="select" onChange={this.handleCurrencyChange}>
                         <option>beers</option>
+                        <option>donettes</option>
                         <option>money</option>
                     </Form.Control>
                 </Form.Group>
