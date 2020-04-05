@@ -9,22 +9,32 @@ class Bets extends React.Component {
         super(props);
         this.state = {
             bets: [],
-            newBet: null
+            newBet: null,
+            me: null
         };
         this.loadBets = this.loadBets.bind(this);
     }
 
     componentDidMount() {
-        console.log(this.props);
         this.setState({newBet: this.props.newBet});
+
+        this.loadMe();
         this.loadBets();
+    }
+
+    componentWillUnmount() {
+        this.setState({newBet: null});
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.onlyMine !== this.props.onlyMine) {
+            this.loadBets();
+        }
     }
 
     render() {
 
-
-
-        let items = this.state.bets.map(b => <Bet bet={b} reloadFunction={this.loadBets} />);
+        let items = this.state.bets.map(b => <Bet bet={b} me={this.state.me} reloadFunction={this.loadBets} />);
 
         return (
           <div>
@@ -41,9 +51,23 @@ class Bets extends React.Component {
     }
 
     loadBets() {
-        fetch('/api/1/bets')
+
+        const url = this.props.onlyMine ? '/api/1/bets/user/me' : '/api/1/bets';
+
+        fetch(url)
           .then(response => response.json())
           .then(json => this.setState({ bets: json.data }));
+    }
+
+    loadMe() {
+
+        fetch('/api/1/users/me')
+          .then(response => {
+              return response.json();
+          })
+          .then(json => {
+              this.setState({ me: json });
+          });
     }
 }
 

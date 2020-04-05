@@ -53,8 +53,6 @@ class Add extends React.Component {
             },
             body: JSON.stringify(body)
         }).then(data => {
-            console.log('Bet submitted');
-            console.log(data);
             this.setState({successAgainst: this.state.againstName})
         });
     }
