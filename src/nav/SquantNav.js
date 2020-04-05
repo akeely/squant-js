@@ -13,7 +13,8 @@ class SquantNav extends React.Component {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/bets">My Bets</Nav.Link>
+            <Nav.Link as={Link} to="/bets">All Bets</Nav.Link>
+            <Nav.Link as={Link} to="/bets/me">My Bets</Nav.Link>
             <Nav.Link as={Link} to="/add">Add</Nav.Link>
           </Nav>
         </Navbar.Collapse>

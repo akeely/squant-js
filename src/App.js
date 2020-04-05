@@ -24,14 +24,21 @@ function App() {
         <Container>
           <Switch>
             <Route exact path="/">
-              <Bets/>
+              <Bets newBet={null} onlyMine={true} />
             </Route>
+            <Route path="/bets/me" render={(props) => {
+              let newBet = null;
+              if (!!props.location.state) {
+                newBet = props.location.state.newBet;
+              }
+              return (<Bets newBet={newBet} onlyMine={true} />);
+            }} />
             <Route path="/bets" render={(props) => {
               let newBet = null;
               if (!!props.location.state) {
                 newBet = props.location.state.newBet;
               }
-              return (<Bets newBet={newBet} />);
+              return (<Bets newBet={newBet} onlyMine={false} />);
             }} />
             <Route path="/add">
               <Add />

@@ -17,14 +17,12 @@ class Bet extends React.Component {
 
     let bet = this.props.bet;
 
-    console.log(bet);
-
     return (
       <Row className="p-1 align-items-center">
         <Col className="align-items-center justify-content-end">
           {bet.creator.name} bet {bet.against.name} {bet.amount} {bet.currency} for {bet.description}.
         </Col>
-        <Winner bet={bet} paidFunction={this.markPaid} winnerFunction={this.markWinner}/>
+        <Winner bet={bet} me={this.props.me} paidFunction={this.markPaid} winnerFunction={this.markWinner}/>
       </Row>
     );
   }
@@ -74,8 +72,14 @@ function Winner(props) {
   if (!!bet.winner) {
     return (
       <Col className="align-items-center">
-        {bet.winner.name} won! <Paid bet={bet} paidFunction={props.paidFunction} />
+        {bet.winner.name} won! <Paid bet={bet} me={props.me} paidFunction={props.paidFunction} />
       </Col>
+    );
+  }
+
+  if (props.me === undefined || (bet.creator.id !== props.me.id && bet.against.id !== props.me.id)) {
+    return (
+      <Col className="align-items-center">No winner declared.</Col>
     );
   }
 
@@ -98,6 +102,10 @@ function Paid(props) {
 
   if (bet.paid) {
     return <Button variant="success" disabled={true}>Paid</Button>;
+  }
+
+  if (props.me === undefined || (bet.creator.id !== props.me.id && bet.against.id !== props.me.id)) {
+    return <Button variant="warning" disabled={true}>Unpaid</Button>;
   }
 
   return <Button variant="warning" onClick={props.paidFunction}>Mark as paid</Button>;
